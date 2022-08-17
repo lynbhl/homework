@@ -1,0 +1,148 @@
+\documentclass{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{enumerate}
+
+% Margins
+\usepackage[top=2.5cm, left=3cm, right=3cm, bottom=4.0cm]{geometry}
+% Colour table cells
+\usepackage[table]{xcolor}
+
+% Get larger line spacing in table
+\newcommand{\tablespace}{\\[1.25mm]}
+\newcommand\Tstrut{\rule{0pt}{2.6ex}}         % = `top' strut
+\newcommand\tstrut{\rule{0pt}{2.0ex}}         % = `top' strut
+\newcommand\Bstrut{\rule[-0.9ex]{0pt}{0pt}}   % = `bottom' strut
+
+%%%%%%%%%%%%%%%%%
+%     Title     %
+%%%%%%%%%%%%%%%%%
+\title{MACHINE LEARNING 1}
+\author{Bui Hoang Linh - 11205706}
+\date{Homework 1}
+
+\begin{document}
+\maketitle
+
+%%%%%%%%%%%%%%%%%
+%   Problem 1   %
+%%%%%%%%%%%%%%%%%
+\section {Exercise 1}
+a)
+The marginal distribution p(x) and p(y):
+\begin{itemize}
+    \item p(x)
+    \begin{align}
+        p(x_1) = p(X=x_1) = 0.01 + 0.05 + 0.01 = 0.16\\
+        p(x_2) = p(X=x_2) = 0.02 + 0.1 + 0.05 = 0.17\\
+        p(x_3) = p(X=x_3) = 0.03 + 0.05 + 0.03 = 0.11\\
+        p(x_4) = p(X=x_4) = 0.1 + 0.07 + 0.05 = 0.22\\
+        p(x_5) = p(X=x_5) = 0.1 + 0.2 + 0.04 = 0.34
+    \end{align}
+    \item p(y)
+    \begin{align}
+        p(y_1) = p(Y=y_1) = 0.01 + 0.02 + 0.03 + 0.1 + 0.1 = 0.26\\
+        p(y_2) = p(Y=y_2) = 0.05 + 0.1 + 0.05 + 0.07 + 0.2 = 0.47\\
+        p(y_3) = p(Y=y_3) = = 0.1 + 0.05 + 0.03 + 0.05 + 0.04 = 0.27
+    \end{align}
+       
+\end{itemize}
+b)
+The condition distribution p(x|Y=y1) and p(x|Y=y3):
+\begin{itemize}
+    \item $p(x|Y=y_1)$
+    \begin{align}
+        p(x_1|Y=y_1) = \frac{p(X=x_1,Y=y_1)}{p(y_1)} = \frac{0.01}{0.26} \approx 0.038\\
+        p(x_2|Y=y_1) = \frac{p(X=x_2,Y=y_1)}{p(y_1)} = \frac{0.02}{0.26} \approx 0.077\\
+        p(x_3|Y=y_1) = \frac{p(X=x_3,Y=y_1)}{p(y_1)} = \frac{0.03}{0.26} \approx 0.115\\
+        p(x_4|Y=y_1) = \frac{p(X=x_4,Y=y_1)}{p(y_1)} = \frac{0.1}{0.26} \approx 0.385\\
+        p(x_5|Y=y_1) = \frac{p(X=x_5,Y=y_1)}{p(y_1)} = \frac{0.1}{0.26} \approx 0.385\\
+    \end{align}
+    \item $p(x|Y=y_3)$
+    \begin{align}
+        p(x_1|Y=y_3) = \frac{p(X=x_1,Y=y_3)}{p(y_3)} = \frac{0.1}{0.27} \approx 0.37\\
+        p(x_2|Y=y_3) = \frac{p(X=x_2,Y=y_3)}{p(y_3)} = \frac{0.05}{0.27} \approx 0.185\\
+        p(x_3|Y=y_3) = \frac{p(X=x_3,Y=y_3)}{p(y_3)} = \frac{0.03}{0.27} \approx 0.11\\
+        p(x_4|Y=y_3) = \frac{p(X=x_4,Y=y_3)}{p(y_3)} = \frac{0.05}{0.27} \approx 0.185\\
+        p(x_5|Y=y_3) = \frac{p(X=x_5,Y=y_3)}{p(y_3)} = \frac{0.04}{0.27} \approx 0.148\\
+    \end{align}
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%
+%   Problem 2   %
+%%%%%%%%%%%%%%%%%
+\section{Exercise 2}
+We have:
+\begin{eqnarray*}
+    E_Y[E_X[x|y]] & = & \sum E(X|Y=y) \cdot P(Y=y) \\
+    & = & \sum_y \sum_x x P(X=x|Y=y) \cdot P(Y=y) \\
+    & = & \sum_y \sum_x x P(Y=y|X=x) \cdot P(X=x) \\
+    & = & \sum_x P(X=x) \sum_y P(Y=y|X=x) \\
+    & = & E_X(X)
+\end{eqnarray*}
+
+%%%%%%%%%%%%%%%%%
+%   Problem 3   %
+%%%%%%%%%%%%%%%%%
+
+\section{Exercise 3}
+Set variable names: \begin{itemize}
+    \item X: people who use product X
+    \item Y: people who use product Y
+\end{itemize}
+Then, we have:\\
+P(X)=0.207   ,  P(Y)=0.5   ,  P(A|B)=0.365
+\begin{enumerate}[a)]
+    \item $P(AB) = P(A|B)\cdot P(B) = 0.5 \cdot 0.365 = 0.1825$
+    \item $P(B|\overline{A}) = \frac{P(\overline{A}|B) \cdot P(B)}{P(\overline{A})} = \frac{(1-0.365) \cdot 0.5}{1 - 0.207} = 0.4004$
+\end{enumerate}
+
+
+
+ %%%%%%%%%%%%%%%%%
+%   Problem 4   %
+%%%%%%%%%%%%%%%%%
+
+\section{Exercise 4}
+Standard deviation:
+$V_X[x] = E_X[(x-\mu)^2]$\\
+Using the properties of avarage we have:\\
+\begin{eqnarray*}
+V_X[x] & = & E_X[(x-\mu)^2] \\
+& = & E_X[x^2 - 2x\mu + \mu^2]\\
+& = & E_X[x^2] - E_X[2x\mu] + E_X[\mu^2]\\
+& = & E_X[x^2] -2\mu E_X[x] + \mu^2\\                
+& = & E_X[x^2] -2\mu^2 + \mu^2\\
+& = & E_X[x^2] - \mu^2
+\end{eqnarray*}
+We have: $\mu = E_X[x]$ \\
+ $ => V_X[x]  =  E_X[(x-\mu)^2]  =  E_X[x^2] -(E_X[x])^2 $
+
+%%%%%%%%%%%%%%%%%
+%   Problem 5   %
+%%%%%%%%%%%%%%%%%
+
+\section{Exercise 5}
+Set variable names:
+\begin{itemize}
+    \item A: door 1 has a car
+    \item B: Monty open the door 2
+    \item C: door 3 has a car
+\end{itemize}
+$P(A) = \frac{1}{3}$\\
+$P(B) = \frac{1}{2}$\\
+We have: $P(B|A) = \frac{1}{2}$ is the probability Monty open the door 2 given that the door 1 has the car\\
+$P(A|B) = \frac{1}{3}$ is the probability that the car is in the door 1 after Monty open the door 2\\
+Event A and event C are 2 mutually exclusive events so:\\
+$=> P(C) = 1 - P(A) = \frac{2}{3}$\\
+$=>$ The chances of winning the car are indeed 2 times higher (2/3) when you switch than when you stick (1/3)
+
+
+
+
+\end{document}
