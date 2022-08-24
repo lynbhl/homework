@@ -1,14 +1,15 @@
 \documentclass{article}
 
+
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb}
 \usepackage{parskip}
-\usepackage{graphicx}
 \usepackage{enumerate}
 
 % Margins
-\usepackage[top=2.5cm, left=3cm, right=3cm, bottom=4.0cm]{geometry}
+
+\usepackage[top=2cm, bottom=2cm, left=2.5cm, right=2cm] {geometry}
 % Colour table cells
 \usepackage[table]{xcolor}
 
@@ -18,131 +19,221 @@
 \newcommand\tstrut{\rule{0pt}{2.0ex}}         % = `top' strut
 \newcommand\Bstrut{\rule[-0.9ex]{0pt}{0pt}}   % = `bottom' strut
 
-%%%%%%%%%%%%%%%%%
-%     Title     %
-%%%%%%%%%%%%%%%%%
+
 \title{MACHINE LEARNING 1}
 \author{Bui Hoang Linh - 11205706}
-\date{Homework 1}
+\date{Homework 2}
 
 \begin{document}
 \maketitle
 
-%%%%%%%%%%%%%%%%%
-%   Problem 1   %
-%%%%%%%%%%%%%%%%%
-\section {Exercise 1}
-a)
-The marginal distribution p(x) and p(y):
-\begin{itemize}
-    \item p(x)
-    \begin{align}
-        p(x_1) = p(X=x_1) = 0.01 + 0.05 + 0.01 = 0.16\\
-        p(x_2) = p(X=x_2) = 0.02 + 0.1 + 0.05 = 0.17\\
-        p(x_3) = p(X=x_3) = 0.03 + 0.05 + 0.03 = 0.11\\
-        p(x_4) = p(X=x_4) = 0.1 + 0.07 + 0.05 = 0.22\\
-        p(x_5) = p(X=x_5) = 0.1 + 0.2 + 0.04 = 0.34
-    \end{align}
-    \item p(y)
-    \begin{align}
-        p(y_1) = p(Y=y_1) = 0.01 + 0.02 + 0.03 + 0.1 + 0.1 = 0.26\\
-        p(y_2) = p(Y=y_2) = 0.05 + 0.1 + 0.05 + 0.07 + 0.2 = 0.47\\
-        p(y_3) = p(Y=y_3) = = 0.1 + 0.05 + 0.03 + 0.05 + 0.04 = 0.27
-    \end{align}
-       
-\end{itemize}
-b)
-The condition distribution p(x|Y=y1) and p(x|Y=y3):
-\begin{itemize}
-    \item $p(x|Y=y_1)$
-    \begin{align}
-        p(x_1|Y=y_1) = \frac{p(X=x_1,Y=y_1)}{p(y_1)} = \frac{0.01}{0.26} \approx 0.038\\
-        p(x_2|Y=y_1) = \frac{p(X=x_2,Y=y_1)}{p(y_1)} = \frac{0.02}{0.26} \approx 0.077\\
-        p(x_3|Y=y_1) = \frac{p(X=x_3,Y=y_1)}{p(y_1)} = \frac{0.03}{0.26} \approx 0.115\\
-        p(x_4|Y=y_1) = \frac{p(X=x_4,Y=y_1)}{p(y_1)} = \frac{0.1}{0.26} \approx 0.385\\
-        p(x_5|Y=y_1) = \frac{p(X=x_5,Y=y_1)}{p(y_1)} = \frac{0.1}{0.26} \approx 0.385\\
-    \end{align}
-    \item $p(x|Y=y_3)$
-    \begin{align}
-        p(x_1|Y=y_3) = \frac{p(X=x_1,Y=y_3)}{p(y_3)} = \frac{0.1}{0.27} \approx 0.37\\
-        p(x_2|Y=y_3) = \frac{p(X=x_2,Y=y_3)}{p(y_3)} = \frac{0.05}{0.27} \approx 0.185\\
-        p(x_3|Y=y_3) = \frac{p(X=x_3,Y=y_3)}{p(y_3)} = \frac{0.03}{0.27} \approx 0.11\\
-        p(x_4|Y=y_3) = \frac{p(X=x_4,Y=y_3)}{p(y_3)} = \frac{0.05}{0.27} \approx 0.185\\
-        p(x_5|Y=y_3) = \frac{p(X=x_5,Y=y_3)}{p(y_3)} = \frac{0.04}{0.27} \approx 0.148\\
-    \end{align}
-\end{itemize}
+
+\section{Exercise 1}
+Proff that:\\
+a) Gaussian distribution is normalized\\
+Normalization of Univariate Gaussian distribution is given by:
+\[\int_{-\infty}^{\infty} p(x | \mu, \sigma^2) dx = 1\]
+\[\Longleftrightarrow \int_{-\infty}^{\infty} \frac{1}{\sqrt{2 \pi \sigma^2}} \exp \left( \frac{-(x - \mu)^2}{2 \sigma^2} \right) dx = 1\]
+We will first prove the base case when the mean equals to zero ($\mu = 0$), which means that:
+\[\int_{-\infty}^{\infty} \frac{1}{\sqrt{2 \pi \sigma^2}} \exp \left( \frac{-1}{2 \sigma^2} x^2 \right) dx = 1\]
+\[\Longleftrightarrow \int_{-\infty}^{\infty} \exp \left( \frac{-1}{2 \sigma^2} x^2 \right) dx = \sqrt{2 \pi \sigma^2}\]
+     
+Let:
+\[I = \int_{-\infty}^{\infty} \exp \left( \frac{-1}{2 \sigma^2} x^2 \right) dx\]
+Then we will take the square of both side:
+\[I^2 = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} 
+\exp \left( \frac{-1}{2 \sigma^2} x^2 \right) \exp \left( \frac{-1}{2 \sigma^2} y^2 \right) dx dy\]
+\[\Longleftrightarrow I^2 = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty}
+\exp \left( -\frac{x^2 + y^2}{2 \sigma^2}\right) dx dy\]
+     
+To conduct the integration, we will make the transformation from Cartesian coordinates $(x, y)$ to \textbf{polar coordinates} $(r, \theta)$ by assuming:
+\begin{align*}
+    x = r \cos \theta \\
+    y = r \sin \theta
+\end{align*}
+where $r$ and $\theta$ are arbitrary number and angle. By the trigonometric identity we also have:
+\begin{align*}
+    \cos^2 \theta + \sin^2 \theta = 1 \\
+    x^2 + y^2 = r^2
+\end{align*}
+While transforming integrals between two coordinate systems, we also note that the Jacobian the change of variables is given by:
+\begin{align*}
+    dx dy &= |J| dr d\theta\\
+    &= 
+    \begin{vmatrix}
+    \displaystyle{\frac{\partial (x)}{\partial (r)}} & \displaystyle{\frac{\partial (x)}{\partial (\theta)}}\\ 
+    \displaystyle{\frac{\partial (y)}{\partial (r)}} & 
+    \displaystyle{\frac{\partial (y)}{\partial (\theta)}}
+    \end{vmatrix} \\
+     &=
+    \begin{vmatrix}
+    \cos \theta & -r \sin \theta \\
+    \sin \theta & r \cos \theta
+    \end{vmatrix} \\
+    &= r \cos^2 \theta + r \sin^2 \theta \\
+    &= r \\
+    & \Longrightarrow dxdy = r dr d\theta
+\end{align*}
+Substituting the above results to the expression of $I$ then:
+\begin{align*}
+    I^2 &= \int_0^{2 \pi} \int_0^\infty \exp \left( -\frac{r^2}{2 \sigma^2} \right) r dr d\theta \\
+    &= 2 \pi \int_0^\infty \exp \left( -\frac{r^2}{2 \sigma^2} \right) r dr \\
+    &= 2 \pi \pi \int_0^\infty \exp \exp \left( -\frac{r^2}{2 \sigma^2} \right) \frac{d(r^2)}{2} \\
+    &= \pi \left[ \exp \left(- \frac{r^2}{2 \sigma^2} \right) (-2 \sigma^2) \right]_0^\infty \\
+    &= 2 \pi \sigma^2
+\end{align*}
+Now we have $I = \sqrt{2 \pi \sigma^2}$, to prove the case when mean is non zero, we suppose $t = x - \mu$ so that:
+\begin{align*}
+    \int_{-\infty}^\infty p(x|\mu, \sigma^2) dx &= \frac{1}{\sqrt{2 \pi \sigma^2}} \int_{-\infty}^\infty \exp \left( -\frac{t^2}{2\sigma^2} \right) dt \\
+    &= \frac{I}{\sqrt{2 \pi \sigma^2}} \\
+    &= \frac{\sqrt{2 \pi \sigma^2}}{\sqrt{2 \pi \sigma^2}} = 1  \qed
+\end{align*}
+b) Expectation of Gaussian distribution is: $\mu$ \\
+We have probability density function:\\
+$f_X(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$\\
+The expect value:\\
+\begin{eqnarray*}
+    E(X) & = & \displaystyle\int\limits_{-\infty}^{\infty} xf(x) \mathrm{d}x\\
+    & = & \frac{1}{\sigma \sqrt{2\pi}} \displaystyle\int\limits_{-\infty}^{\infty} x e^{-\frac{(x-\mu)^2}{2 \sigma^2}} \mathrm{d}x
+\end{eqnarray*}
+Let t = $\frac{x-\mu}{\sqrt{2}\sigma}$ \\
+$=> \mathrm{d}t = \frac{1}{\sqrt{2}\sigma} \mathrm{d}x$ \\
+$=> \sqrt{2}\sigma \mathrm{d}t = \mathrm{d}x$ \\
+So:
+\begin{eqnarray*}
+    E(X) & = & \frac{\sqrt{2}\sigma}{\sigma\sqrt{2\pi}} \displaystyle\int\limits_{-\infty}^{\infty} (\sqrt{2\sigma}t + \mu) e^{-t^2} \mathrm{d}t \\
+    & = & \frac{1}{\sqrt{\pi}} (\sqrt{2}\sigma \displaystyle\int\limits_{-\infty}^{\infty} t e^{-t^2} \mathrm{d}t + \mu \displaystyle\int\limits_{-\infty}^{\infty} e^{-t^2} \mathrm{d}t )  \\
+    & = & \frac{1}{\sqrt{\pi}} (\sqrt{2}\sigma [\frac{-1}{2} e^{-t^2}] + \mu \sqrt{\pi})\\
+    & = & \frac{\mu \sqrt{\pi}}{\sqrt{\pi}}\\
+    & = & \mu
+\end{eqnarray*}
+
+c) Variance of Gaussian distribution is $\sigma^2$\\
+We have the probability density function of Gaussian distribution is:\\
+\begin{align*}
+    f_X(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp{(-\frac{(x-\mu)^2}{2\sigma^2})}
+\end{align*}
+From the Varience as Expectation of Square minus Square of expactation:\\
+\begin{align*}
+    var(X) = \displaystyle\int\limits_{-\infty}^{\infty} x^2f_X(x)\mathrm{d}x - (E(X))^2
+\end{align*}
+So:
+\begin{eqnarray*}
+    var(X) & = & \frac{1}{\sigma\sqrt{2\pi}} \displaystyle\int\limits_{-\infty}^{\infty} x^2 \exp{(-\frac{(x-\mu)^2}{2\sigma^2})}\mathrm{d}x - \mu^2\\
+    Let t = \frac{x-\mu}{\sqrt{2}\sigma}:\\
+    & = & \frac{\sqrt{2}\sigma}{\sigma\sqrt{2\pi}} \displaystyle\int\limits_{-\infty}^{\infty} (\sqrt{2}\sigma t + \mu)^2 \exp{(-t^2)}\mathrm{d}t - \mu^2\\
+    & = & \frac{1}{\sqrt{\pi}}(2\sigma^2 \displaystyle\int\limits_{-\infty}^{\infty} t^2 \exp{(-t^2)} \mathrm{d}t + 2\sqrt{2}\sigma\mu \displaystyle\int\limits_{-\infty}^{\infty}t \exp{(-t^2)} \mathrm{d}t + \mu^2\displaystyle\int\limits_{-\infty}^{\infty}\exp{(-t^2)\mathrm{d}t}) - \mu^2\\
+    & = & \frac{1}{\sqrt{\pi}}(2\sigma^2 \displaystyle\int\limits_{-\infty}^{\infty} t^2 \exp{(-t^2)} \mathrm{d}t + 2\sqrt{2}\sigma\mu[-\frac{1}{2}\exp{(-t^2)}] + \mu^2\sqrt{\pi}) - \mu^2\\
+    & = & \frac{1}{\sqrt{\pi}}(2\sigma^2 \displaystyle\int\limits_{-\infty}^{\infty} t^2 \exp{(-t^2)} \mathrm{d}t + 2\sqrt{2}\sigma\mu\cdot 0) + \mu^2 - \mu^2\\
+    & = & \frac{2\sigma^2}{\sqrt{\pi}} \displaystyle\int\limits_{-\infty}^{\infty} t^2 \exp{(-t^2)} \mathrm{d}t\\
+    & = & \frac{2\sigma^2}{\sqrt{\pi}} ([-\frac{t}{2}\exp{-t^2}] + \frac{1}{2}\displaystyle\int\limits_{-\infty}^{\infty}\exp{(-t^2)}\mathrm{d}t)\\
+    & = & \frac{2\sigma^2}{\sqrt{\pi}} \cdot \frac{1}{2} \displaystyle\int\limits_{-\infty}^{\infty}\exp{(-t^2)} \mathrm{d}t\\
+    & = & \frac{2\sigma^2\sqrt{\pi}}{2\sqrt{\pi}}\\
+    & = & \sigma^2
+\end{eqnarray*}
+d) Multivariate Gaussian distribution is normalized
+
+We have
+$$
+\begin{aligned}
+\Delta^{2} &=(x-\mu)^{T} \Sigma^{-1}(x-\mu) \\
+&=\sum_{i=1}^{D} \frac{1}{\lambda_{i}}(x-\mu)^{T}(x-\mu) \\
+&=\sum_{i=1}^{D} \frac{y_{i}^{2}}{\lambda_{i}}
+\end{aligned}
+$$
+with $y_{i}=u_{i}^{T}(x-\mu)$ We also have $|\Sigma|^{\frac{1}{2}}=\prod_{i=1}^{D} \lambda_{i}^{\frac{1}{2}}$.
+For a D-dimensional vector $\mathrm{x}$, the multivariate Gaussian distribution takes the form
+\[p(x \mid \mu, \Sigma)=\frac{1}{(2 \pi)^{\frac{D}{2}}|\Sigma|^{\frac{1}{2}}} \exp \left(-\frac{1}{2}(x-\mu)^{T} \Sigma^{-1}(x-\mu)\right)\]
+We replace $y_{i}=u_{i}^{T}(x-\mu)$ into the equation, we have
+$$
+\begin{aligned}
+p(y) &=\frac{1}{(2 \pi)^{\frac{D}{2}}\left(\prod_{i=1}^{D} \lambda_{i}\right)^{\frac{1}{2}}} \exp \left(-\frac{1}{2} \sum_{i=1}^{D} \frac{y_{i}^{2}}{\lambda_{i}}\right) \\
+&=\frac{1}{(2 \pi)^{\frac{D}{2}}\left(\prod_{i=1}^{D} \lambda_{i}\right)^{\frac{1}{2}}} \prod_{i=1}^{D} \exp \left(-\frac{1}{2} \frac{y_{i}^{2}}{\lambda_{i}}\right) \\
+&=\prod_{j=1}^{D} \frac{1}{\left(2 \pi \lambda_{i}\right)^{\frac{1}{2}}} \exp \left(-\frac{y_{j}^{2}}{2 \lambda_{j}}\right) \\
+\Longrightarrow \int_{-\infty}^{\infty} p(y) d y &=\prod_{j=1}^{D} \int_{-\infty}^{\infty} \frac{1}{\left(2 \pi \lambda_{i}\right)^{\frac{1}{2}}} \exp \left(-\frac{y_{j}^{2}}{2 \lambda_{j}}\right) d y_{j} \\
+&=1
+\end{aligned}
+$$
 
 
-%%%%%%%%%%%%%%%%%
-%   Problem 2   %
-%%%%%%%%%%%%%%%%%
 \section{Exercise 2}
-We have:
+Let $Y~N(\mu; \sum)$. COnsider the partitioning $\mu$ and Y into:\\
+\begin{align*}
+    \mu & = 
+    \begin{vmatrix}
+        \displaystyle{\mu_1}\\
+        \displaystyle{\mu_2}
+    \end{vmatrix} \\
+    \sum & = 
+    \begin{vmatrix}
+        \displaystyle{y_1}\\
+        \displaystyle{y_2}
+    \end{vmatrix}
+\end{align*} 
+With a similar partition of $\sum$ into:\\
+\begin{align*}
+    \begin{vmatrix}
+    \displaystyle{\sum_{11}} &
+    \displaystyle{\sum_{12}}\\
+    \displaystyle{\sum_{21}} &
+    \displaystyle{\sum_{22}}
+\end{vmatrix}
+\end{align*}
+Then $(y_1|y_2 = a)$, the conditional distribution of first partition given the second is $N(\overline{\mu}, \overline{\sum})$ with mean:\\
+\begin{align*}
+    \overline{\mu} = \mu_1 + \sum_{12}\sum_{22}^{-1}(a-\mu_2)
+\end{align*}
+and covarience matrix:\\
+\begin{align*}
+    \overline{\sum} = \sum_{11} - \sum_{12}\sum_{22}^{-1}\sum_{21}
+\end{align*}
+Use the blockwise inversion formula to write the inverse-varience matrix as:\\
 \begin{eqnarray*}
-    E_Y[E_X[x|y]] & = & \sum E(X|Y=y) \cdot P(Y=y) \\
-    & = & \sum_y \sum_x x P(X=x|Y=y) \cdot P(Y=y) \\
-    & = & \sum_y \sum_x x P(Y=y|X=x) \cdot P(X=x) \\
-    & = & \sum_x P(X=x) \sum_y P(Y=y|X=x) \\
-    & = & E_X(X)
+    \sum^{-1} & =
+    {\begin{vmatrix}
+       \displaystyle{\sum_{11}} &
+        \displaystyle{\sum_{12}}\\
+        \displaystyle{\sum_{21}} &
+        \displaystyle{\sum_{22}}
+    \end{vmatrix}} ^{-1}
+    & =
+     \begin{vmatrix}
+       \displaystyle{\sum_{11}^*} &
+        \displaystyle{\sum_{12}^*}\\
+        \displaystyle{\sum_{21}^*} &
+        \displaystyle{\sum_{22}^*}
+    \end{vmatrix}
 \end{eqnarray*}
-
-%%%%%%%%%%%%%%%%%
-%   Problem 3   %
-%%%%%%%%%%%%%%%%%
-
-\section{Exercise 3}
-Set variable names: \begin{itemize}
-    \item X: people who use product X
-    \item Y: people who use product Y
-\end{itemize}
-Then, we have:\\
-P(X)=0.207   ,  P(Y)=0.5   ,  P(A|B)=0.365
-\begin{enumerate}[a)]
-    \item $P(AB) = P(A|B)\cdot P(B) = 0.5 \cdot 0.365 = 0.1825$
-    \item $P(B|\overline{A}) = \frac{P(\overline{A}|B) \cdot P(B)}{P(\overline{A})} = \frac{(1-0.365) \cdot 0.5}{1 - 0.207} = 0.4004$
-\end{enumerate}
-
-
-
- %%%%%%%%%%%%%%%%%
-%   Problem 4   %
-%%%%%%%%%%%%%%%%%
-
-\section{Exercise 4}
-Standard deviation:
-$V_X[x] = E_X[(x-\mu)^2]$\\
-Using the properties of avarage we have:\\
+Where:\\
+$
+    \sum_{11}^* = \sum_{*}^{-1}\\
+    \sum_{12}^* = -\sum_{*}^{-1}\sum_{12}\sum_{22}^{-1}\\
+    \sum_{21}^* = -\sum_{22}^{-1}\sum_{21}\sum_{*}^{-1}\\
+    \sum_{22}^* = \sum_{22}^{-1} + \sum_{22}^{-1}\sum_{21}\sum_{*}^{-1}\sum_{12}\sum_{22}^{-1}
+$\\
+We have:\\
 \begin{eqnarray*}
-V_X[x] & = & E_X[(x-\mu)^2] \\
-& = & E_X[x^2 - 2x\mu + \mu^2]\\
-& = & E_X[x^2] - E_X[2x\mu] + E_X[\mu^2]\\
-& = & E_X[x^2] -2\mu E_X[x] + \mu^2\\                
-& = & E_X[x^2] -2\mu^2 + \mu^2\\
-& = & E_X[x^2] - \mu^2
+    (y-\mu)^T\sum^{-1}(y-\mu) & = &
+    {\begin{bmatrix}
+        \displaystyle{y_1 - \mu_1}\\
+        \displaystyle{y_2 - \mu_2}
+    \end{bmatrix}} ^{T}
+    \begin{bmatrix}
+        \displaystyle{\sum_{11}^*} &
+        \displaystyle{\sum_{12}^*}\\
+        \displaystyle{\sum_{21}^*} &
+        \displaystyle{\sum_{22}^*}
+    \end{bmatrix}
+    \begin{bmatrix}
+        \displaystyle{y_1 - \mu_1}\\
+        \displaystyle{y_2 - \mu_2}
+    \end{bmatrix}\\
+    & = & (y_1 - \mu_1)^T \sum_{11}^* (y_1 - \mu_1) + (y_1 - \mu_1)^T \sum_{12}^* (y_2 - \mu_2) + (y_2 - \mu_2)^T \sum_{21}^* (y_1 - \mu_1) + (y_2 - \mu_2)^T \sum_{22}^* (y_2 - \mu_2)\\
+    & = & (y_1 - \mu_1)^T \sum_{*}^{-1} (y_1 - \mu_1) - (y_1 - \mu_1)^T \sum_{*}^{-1} \sum_{12} \sum_{22}^{-1} (y_2 - \mu_2) - (y_2 - \mu_2)^T \sum_{22}^{-1}\sum_{21}\sum_{*}^{-1}\sum_{12}\sum_{22}^{-1} (y_2 - \mu_2)\\
+    & = & (y_1 - (\mu_1 + \sum_{12}\sum_{22}^{-1} (y_2 - \mu_2)))^{T} \sum_{*}^{-1} (y_1 - (\mu_1 + \sum_{12}\sum_{22}^{-1} (y_2 - \mu_2))) + (y_2 - \mu_2)^{T}\sum_{22}^{-1} (y_2 - \mu_2)\\
+    & = & (y_1 - \mu_)^{T} \sum_{*}^{-1} (y_1 - \mu_) + (y_2 - \mu_2)^{T} \sum_{22}^{-1} (y_2 - \mu_2)
 \end{eqnarray*}
-We have: $\mu = E_X[x]$ \\
- $ => V_X[x]  =  E_X[(x-\mu)^2]  =  E_X[x^2] -(E_X[x])^2 $
-
-%%%%%%%%%%%%%%%%%
-%   Problem 5   %
-%%%%%%%%%%%%%%%%%
-
-\section{Exercise 5}
-Set variable names:
-\begin{itemize}
-    \item A: door 1 has a car
-    \item B: Monty open the door 2
-    \item C: door 3 has a car
-\end{itemize}
-$P(A) = \frac{1}{3}$\\
-$P(B) = \frac{1}{2}$\\
-We have: $P(B|A) = \frac{1}{2}$ is the probability Monty open the door 2 given that the door 1 has the car\\
-$P(A|B) = \frac{1}{3}$ is the probability that the car is in the door 1 after Monty open the door 2\\
-Event A and event C are 2 mutually exclusive events so:\\
-$=> P(C) = 1 - P(A) = \frac{2}{3}$\\
-$=>$ The chances of winning the car are indeed 2 times higher (2/3) when you switch than when you stick (1/3)
-
-
-
-
+Where:\\
+Conditional part: $(y_1 - \mu_)^{T} \sum_{*}^{-1} (y_1 - \mu_)$\\
+Marginal part: $(y_2 - \mu_2)^{T} \sum_{22}^{-1} (y_2 - \mu_2)$
 \end{document}
