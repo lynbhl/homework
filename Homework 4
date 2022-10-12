@@ -1,0 +1,159 @@
+\documentclass{article}
+
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{enumerate}
+
+% Margins
+
+\usepackage[top=2cm, bottom=2cm, left=2.5cm, right=2cm] {geometry}
+% Colour table cells
+\usepackage[table]{xcolor}
+
+% Get larger line spacing in table
+\newcommand{\tablespace}{\\[1.25mm]}
+\newcommand\Tstrut{\rule{0pt}{2.6ex}}         % = `top' strut
+\newcommand\tstrut{\rule{0pt}{2.0ex}}         % = `top' strut
+\newcommand\Bstrut{\rule[-0.9ex]{0pt}{0pt}}   % = `bottom' strut
+
+
+\title{MACHINE LEARNING 1}
+\author{Bui Hoang Linh - 11205706}
+\date{Homework 4}
+
+\begin{document}
+\maketitle
+\section{Problem 1}
+\textbf{Solution.} 
+
+From Parabola Linear Regression model, then the hypothesis (hypothsis) is given as follows:
+\[y = w_0 + w_1 x + w_2 x^2\]
+
+The given dataset contains only two columns of values x and y, so the code has been built to add a column containing the value of $x^2$. We can consider $x^2$ now as a new independent variable in the model of the Linear Regression model. Training this model using the results of Normal Equation, we get the following coefficients:
+\begin{align*}
+    w_0 &= 2.00000579e+03 \\
+    w_1 &= 1.00000199e+00 \\
+    W_2 &= -1.00000222e+02
+\end{align*}
+
+The prediction line and data are plotted on the scatter plot as follows:
+\begin{center}
+    \includegraphics[scale=0.7]{images/ex1.png}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%% Problem 2:
+\section{Problem 2}
+a. The above data with order of 0, 1, 3, 6, 9 of Linear Regression models draw the model and comment on the model\\
+b. 15 and 100 data points to the original data and test the 9th order model. Comment on the overfitting level of the model.\\
+c. Fit the 9th order model for the original 10 data points but use Ridge Regression and Lasso Regression to avoid overfitting.\\
+
+\textbf{Solution.} 
+\begin{enumerate}[label=\alph*.]
+\item The models are built similarly to the 2nd order model of Problem 1, the code has been built to generate additional data for powers of $x$ for higher-order models. For the zero-order model, the assumption is made that \(y = \overline Y \), or the mean value of the variable data $y$.
+    
+     The prediction line and data are plotted on the scatte graph of each model as follows:
+\begin{center}
+    \includegraphics[scale=0.7]{images/ex2.1.png}
+\end{center}
+\begin{center}
+\textbf{Model 0 order: $y = \overline Y$}
+\end{center}
+
+\begin{center}
+    \includegraphics[scale=0.7]{images/ex2.2.png}
+\end{center}
+\begin{center}
+\textbf{Model 3rd order linear regression, n = 10}
+\end{center}
+
+\begin{center}
+    \includegraphics[scale=0.7]{images/ex2.3.png}
+\end{center}
+\begin{center}
+\textbf{Model 6th order linear regression, n = 10}
+\end{center}
+
+\begin{center}
+    \includegraphics[scale=0.7]{images/ex2.4.png}
+\end{center}
+\begin{center}
+\textbf{Model 9th order linear regression, n = 10}
+\end{center}
+
+Since the data for $x$ and $y$ are built according to the function \(y = \sin (2 \pi x + \text{noise})\), in addition to the red prediction line shown predictive values of the model, the graphs also contain the standard regression line \(y = \sin (2 \pi x)\) in blue for easy comparison of prediction results:
+    \begin{itemize}
+        \item The zero order model shows that $y$ is not dependent on $x$. The graph shows that this model does not fit the standard regression line due to its simplicity. This model suffers from underfitting.
+        \item The 3rd and 6th order models have a high degree of agreement with the standard regression line. However the 3rd order model has a bit more balance between the values of $x$, the 6th order model fits the data better but that is a sign of slight overfitting.
+        \item The 9th order model fits almost completely to the 10 data points, but does not have as much fit to the standard regression line as the previous two models. This model suffers from overfitting.
+    \end{itemize}
+    
+    After adding more data points to the 9th order model, the result of the prediction line is shown as follows:
+    \begin{center}
+    \includegraphics[scale=0.7]{images/ex2.5.png}
+    \end{center}
+    \begin{center}
+    \textbf{Model 9th order linear regression, n = 25}
+    \end{center}
+    
+    \begin{center}
+    \includegraphics[scale=1]{images/ex2.6.png}
+    \end{center}
+    \begin{center}
+    \textbf{Model 9th order linear regression, n = 110}
+    \end{center}
+    
+    The prediction results of the 9th order model have been greatly improved when adding more data points to the model. Especially when adding 100 data points, the prediction line, although not much match with the $x$ data, has an almost complete match with the standard regression line.
+    
+    First, it is necessary to build a theory of how to train the model using Ridge Regression and Lasso Regression.
+    
+    With Ridge Regression, the loss function is redefined as follows:
+    \[\mathcal{L}(w) = \frac{1}{N} ||xw - y||^2_2 + \alpha||w||_2^2 
+    = \frac{1}{N} (xw - y)^T (xw - y) + \alpha w^T w\]
+    To find the optimal solution for the above loss function, taking partial derivative with respect to $w$ of $\mathcal{L}(w)$ we get:
+    \begin{align*}
+        \frac{\partial \mathcal{L}(w)}{\partial w} &= \frac{1}{N} \frac{\partial (xw - y)^T (xw - y)}{\partial w} + \alpha \frac{\partial w^T w}{\partial w}\\
+        &= \frac{2}{N} x^T (xw - y) + 2\alpha w \\
+        &= \frac{2}{N} [(x^T x + N \alpha \mathbf{I})w - x^T y]
+    \end{align*}
+
+    The optimal solution is found when solving the equation:
+    \begin{align*}
+        \frac{\partial \mathcal{L}(w)}{\partial w} = 0 &\Longleftrightarrow \frac{2}{N} [(x^T x + N \alpha \mathbf{I})w - x^T y] = 0\\
+        &\Longleftrightarrow (x^T x + N \alpha \mathbf{I})w = x^T y\\
+        &\Longleftrightarrow w = (x^T x + N \alpha \mathbf{I})^{-1} x^T y
+    \end{align*}
+    Applying the above results to find the coefficient vector for the model, we get the data graph and the prediction line as follows:
+    \begin{center}
+    \includegraphics[scale=1]{images/ex2.7.png}
+    \end{center}
+    \begin{center}
+    \textbf{Model 9th order linear regression, n = 10, $\alpha = 0.0001$}
+    \end{center}
+    
+    The figure above shows that even with the dataset containing only 10 points, the overfitting state of the 9th order model is completely improved.
+    
+    With Lasso Regression, the loss function is defined as follows:
+    \[\mathcal{L}(w) = \frac{1}{N} ||xw - y||^2_2 + \lambda||w||_1 
+    = \frac{1}{N} (xw - y)^T (xw - y) + \lambda \sum^N_i |w_i|\]
+    
+    The above loss function has no continuous derivative, so we will use the Gradient Descent method to find the optimal solution for the above loss function. The gradient vector of $\mathcal{L}(w)$ is as follows:
+    \begin{align*}
+        \nabla \mathcal{L}(w) &= \frac{2}{N} x^T (xw - y) + \lambda \nabla ||w||_1 \\
+        &= \frac{2}{N} x^T (xw - y) + \lambda \frac{\partial ||w||_1}{\partial w_i} \sum^N_i |w_i| \\
+        &= \frac{2}{N} x^T (xw - y) + \lambda \cdot sign(w)
+    \end{align*}
+   The learning method of the Gradient Descent algorithm is as follows: \(w_{k+1} = w_k + \alpha \nabla \mathcal{L}(w)\). The above loop will end when the vector norm of the gradient vector is less than some error $\epsilon$.
+    The graph and prediction line of the 9th order model using Lasso Regression are as follows:
+    \begin{center}
+    \includegraphics[scale=1]{images/Lasso Regression.png}
+    \end{center}
+    \begin{center}
+    \textbf{Model 9th order Lasso Regression, n = 10, $\lambda = 0.045, \epsilon = 0.1, w_0 = 0$, learning rate = 0.1}
+    \end{center}
+    The graph above shows that the overfitting problem has been completely solved, but the results are not as good as Ridge Regression.
+\end{enumerate}
+\end{document}
